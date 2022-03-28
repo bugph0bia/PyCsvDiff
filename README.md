@@ -10,7 +10,7 @@ Output diff in CSV files.
 v0.1.0
 
 ## Requirements
-Python 3
+Python 3 (Use only Standard Library)  
 
 ## Usage
 ```
