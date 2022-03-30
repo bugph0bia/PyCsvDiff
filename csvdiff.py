@@ -1,5 +1,6 @@
 import sys
 import csv
+import json
 import argparse
 from collections import namedtuple
 
@@ -21,6 +22,7 @@ def main():
     parser.add_argument('-e', '--encoding', default='utf-8', help='Encoding for CSV files. (default: utf-8)')
     parser.add_argument('-p', '--primary-key', type=int, default=1, help='Column number as primary key. (range: 1-N, default: 1)')
     parser.add_argument('-t', '--has-title', action='store_true', help='Treat the first line as a header.')
+    parser.add_argument('-f', '--format', default='normal', help='Set format. (normal, json)')
     parser.add_argument('--excel-style', action='store_true', help='Print addresses excel A1 style.')
     parser.add_argument('--hide-address', action='store_true', help='Do not print row/column addresses.')
     parser.add_argument('--hide-keyname', action='store_true', help='Do not print row/column key names.')
@@ -50,8 +52,12 @@ def main():
 
     # get diff info
     diffs = diff_csv(csv1, header1, csv2, header2, primary_key, args.excel_style)
+
     # print result
-    print_diffs(diffs, args.hide_address, args.hide_keyname, args.hide_value)
+    if args.format.lower() == 'json':
+        print(json.dumps([d._asdict() for d in diffs]))
+    else:
+        print_diffs(diffs, args.hide_address, args.hide_keyname, args.hide_value)
 
 
 def read_csv(fname: str, encoding: str, has_header: bool):
