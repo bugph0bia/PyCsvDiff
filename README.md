@@ -6,6 +6,11 @@ PyCsvDiff
 ## Overview
 Print diff in CSV files.
 
+Note:  
+
+Rows are not compared in order from the top. Rows that match the primary key and the column values you have determined are compared.  
+It is assumed that the primary key columns have been sorted beforehand. (Even if they are not sorted, they are sorted before comparison.)  
+
 ## Version
 v0.1.0
 
